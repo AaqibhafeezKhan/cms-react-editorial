@@ -1,9 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import PageEditor from "./PageEditor";
+import singleSpaReact from "single-spa-react";
+import EditorialApp from "./EditorialApp";
 
-function App() {
-  return <PageEditor />;
-}
+const lifecycles = singleSpaReact({
+  React,
+  ReactDOM,
+  rootComponent: EditorialApp,
+  errorBoundary(err, info, props) {
+    return (
+      <div className="card" style={{ color: 'red' }}>
+        <h3>Error in React Editorial MFE</h3>
+        <p>{err.message}</p>
+      </div>
+    );
+  },
+});
 
-ReactDOM.render(<App />, document.getElementById("root"));
+export const { bootstrap, mount, unmount } = lifecycles;
