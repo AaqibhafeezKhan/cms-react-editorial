@@ -1,34 +1,28 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ModuleFederationPlugin = require("webpack").container.ModuleFederationPlugin;
+const path = require('path');
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: './src/index.js',
   output: {
-    publicPath: "http://localhost:9001/",
+    filename: 'main.js',
+    path: path.resolve(__dirname, 'dist'),
+    libraryTarget: 'system',
+    publicPath: '',
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        loader: "babel-loader",
+        loader: 'babel-loader',
         exclude: /node_modules/,
       },
     ],
   },
-  plugins: [
-    new ModuleFederationPlugin({
-      name: "cmsReactEditorial",
-      filename: "remoteEntry.js",
-      exposes: {
-        "./PageEditor": "./src/PageEditor",
-      },
-    }),
-    new HtmlWebpackPlugin({
-      template: "./public/index.html",
-    }),
-  ],
   devServer: {
-    port: 9001,
+    port: 8081,
     historyApiFallback: true,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
   },
+  externals: ["react", "react-dom"],
 };
