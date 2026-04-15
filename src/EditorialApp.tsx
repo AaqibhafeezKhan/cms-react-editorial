@@ -75,13 +75,13 @@ export function EditorialApp(): React.ReactElement {
 
   return (
     <div className="animate-in">
-      <header style={{ marginBottom: '3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <header style={{ marginBottom: '3.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderBottom: '1px solid var(--border)', paddingBottom: '2rem' }}>
         <div>
-          <h2 style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--primary)', letterSpacing: '-0.03em' }}>Editorial</h2>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', fontWeight: 500 }}>Content orchestration and publishing lifecycle</p>
+          <h2 style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--primary)', letterSpacing: '-0.04em', marginBottom: '0.5rem' }}>Editorial Suite</h2>
+          <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', fontWeight: 500 }}>Content orchestration and publishing lifecycle</p>
         </div>
-        <button onClick={() => openEditor()} style={{ background: 'var(--primary-gradient)', color: 'white', border: 'none', padding: '0.75rem 1.75rem', borderRadius: 'var(--radius)', cursor: 'pointer', fontWeight: 700, boxShadow: '0 4px 12px rgba(79, 70, 229, 0.2)', transition: 'transform 0.2s' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}>
-          + New Entry
+        <button onClick={() => openEditor()} style={{ background: 'var(--primary-gradient)', color: 'white', border: 'none', padding: '0.85rem 2rem', borderRadius: '12px', cursor: 'pointer', fontWeight: 700, boxShadow: '0 4px 12px rgba(79, 70, 229, 0.2)', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)' }} onMouseOver={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 20px rgba(79, 70, 229, 0.3)'; }} onMouseOut={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(79, 70, 229, 0.2)'; }}>
+          + Create Article
         </button>
       </header>
 
