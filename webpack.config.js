@@ -1,9 +1,10 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const isProduction = process.env.NODE_ENV === 'production';
+module.exports = (env, argv) => {
+  const isProduction = argv.mode === 'production';
 
-module.exports = {
+  return {
   entry: './src/index.tsx',
   output: {
     filename: 'main.js',
@@ -54,4 +55,5 @@ module.exports = {
   externals: isProduction
     ? ['react', 'react-dom', 'single-spa-react']
     : [],
+  };
 };

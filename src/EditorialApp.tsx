@@ -1,4 +1,5 @@
-import React, { JSX, useState } from 'react';
+import * as React from 'react';
+import { useState } from 'react';
 
 interface Article {
   id: number;
