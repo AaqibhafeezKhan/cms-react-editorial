@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import singleSpaReact from "single-spa-react";
-import EditorialApp from "./EditorialApp";
+import { EditorialApp } from "./EditorialApp";
 
 const lifecycles = singleSpaReact({
   React,

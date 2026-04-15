@@ -13,7 +13,7 @@ interface Article {
 
 const STORAGE_KEY = 'cms_articles';
 
-export default function EditorialApp(): React.ReactElement {
+export function EditorialApp(): React.ReactElement {
   const [articles, setArticles] = useState<Article[]>([]);
   const [activeArticle, setActiveArticle] = useState<Article | null>(null);
   const [editorContent, setEditorContent] = useState({ title: '', body: '', status: 'Draft' as Article['status'] });
