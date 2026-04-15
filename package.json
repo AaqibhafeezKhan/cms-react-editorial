@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "React microfrontend for editorial content management",
   "main": "index.js",
+  "homepage": "https://AaqibhafeezKhan.github.io/cms-react-editorial",
   "scripts": {
     "start": "webpack serve --mode development",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "react": "^17.0.1",
@@ -13,14 +16,21 @@
     "single-spa-react": "^4.2.0"
   },
   "devDependencies": {
-    "babel-loader": "^8.2.2",
-    "html-webpack-plugin": "^5.3.1",
-    "webpack": "^5.24.3",
-    "webpack-cli": "^4.5.0",
-    "webpack-dev-server": "^3.11.2",
-    "typescript": "^5.0.0",
+    "@babel/core": "^7.25.8",
+    "@babel/preset-env": "^7.25.8",
+    "@babel/preset-react": "^7.25.0",
+    "@babel/preset-typescript": "^7.25.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "ts-loader": "^9.0.0"
+    "babel-loader": "^8.4.1",
+    "css-loader": "^6.0.0",
+    "gh-pages": "^6.2.0",
+    "html-webpack-plugin": "^5.3.1",
+    "style-loader": "^3.0.0",
+    "ts-loader": "^9.0.0",
+    "typescript": "^5.0.0",
+    "webpack": "^5.24.3",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
   }
 }
