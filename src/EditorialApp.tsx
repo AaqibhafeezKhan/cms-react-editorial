@@ -75,7 +75,7 @@ export function EditorialApp(): React.ReactElement {
 
   return (
     <div className="animate-in">
-      <header style={{ marginBottom: '3.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderBottom: '1px solid var(--border)', paddingBottom: '2rem' }}>
+      <header className="editorial-header" style={{ marginBottom: '3.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderBottom: '1px solid var(--border)', paddingBottom: '2rem' }}>
         <div>
           <h2 style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--primary)', letterSpacing: '-0.04em', marginBottom: '0.5rem' }}>Editorial Suite</h2>
           <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', fontWeight: 500 }}>Content orchestration and publishing lifecycle</p>
@@ -85,10 +85,23 @@ export function EditorialApp(): React.ReactElement {
         </button>
       </header>
 
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media (max-width: 768px) {
+          .editorial-header { flex-direction: column; align-items: flex-start !important; gap: 1.5rem; }
+          .editorial-header h2 { font-size: 1.75rem !important; }
+          .editorial-header p { font-size: 0.95rem !important; }
+          .article-card { flex-direction: column; align-items: flex-start !important; gap: 1rem; }
+          .article-card > div:last-child { width: 100%; display: flex; gap: 0.5rem; }
+          .article-card button { flex: 1; }
+          .editor-container { padding: 1.5rem !important; }
+          .editor-container h1, .editor-container input { font-size: 1.25rem !important; }
+        }
+      `}} />
+
       {view === 'list' ? (
         <div style={{ display: 'grid', gap: '1.25rem' }}>
           {articles.map(article => (
-            <div key={article.id} className="module-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.75rem 2rem', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}>
+            <div key={article.id} className="module-card article-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.75rem 2rem', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}>
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem' }}>
                   <h3 style={{ fontSize: '1.15rem', fontWeight: 800, margin: 0, color: 'var(--primary)' }}>{article.title}</h3>
@@ -107,7 +120,7 @@ export function EditorialApp(): React.ReactElement {
           ))}
         </div>
       ) : (
-        <div className="module-card" style={{ maxWidth: '900px', margin: '0 auto', background: 'white', padding: '3rem', boxShadow: 'var(--shadow-lg)' }}>
+        <div className="module-card editor-container" style={{ maxWidth: '900px', margin: '0 auto', background: 'white', padding: '3rem', boxShadow: 'var(--shadow-lg)' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             <div>
               <label style={{ display: 'block', marginBottom: '0.75rem', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Article Title</label>
