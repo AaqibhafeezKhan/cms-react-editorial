@@ -75,64 +75,76 @@ export function EditorialApp(): React.ReactElement {
 
   return (
     <div className="animate-in">
-      <header style={{ marginBottom: '2.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <header style={{ marginBottom: '3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <h2 style={{ fontSize: '1.75rem', fontWeight: 800 }}>Editorial</h2>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Content orchestration and publishing</p>
+          <h2 style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--primary)', letterSpacing: '-0.03em' }}>Editorial</h2>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', fontWeight: 500 }}>Content orchestration and publishing lifecycle</p>
         </div>
-        <button onClick={() => openEditor()} className="glass-btn active" style={{ background: 'var(--primary-accent)', color: 'white', border: 'none', padding: '0.6rem 1.2rem', borderRadius: 'var(--radius)', cursor: 'pointer', fontWeight: 600 }}>
+        <button onClick={() => openEditor()} style={{ background: 'var(--primary-gradient)', color: 'white', border: 'none', padding: '0.75rem 1.75rem', borderRadius: 'var(--radius)', cursor: 'pointer', fontWeight: 700, boxShadow: '0 4px 12px rgba(79, 70, 229, 0.2)', transition: 'transform 0.2s' }} onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'} onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}>
           + New Entry
         </button>
       </header>
 
       {view === 'list' ? (
-        <div style={{ display: 'grid', gap: '1rem' }}>
+        <div style={{ display: 'grid', gap: '1.25rem' }}>
           {articles.map(article => (
-            <div key={article.id} className="module-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div key={article.id} className="module-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.75rem 2rem', border: '1px solid var(--border)', boxShadow: 'var(--shadow-sm)' }}>
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
-                  <h3 style={{ fontSize: '1rem', margin: 0 }}>{article.title}</h3>
-                  <span className="module-tag">{article.status}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem' }}>
+                  <h3 style={{ fontSize: '1.15rem', fontWeight: 800, margin: 0, color: 'var(--primary)' }}>{article.title}</h3>
+                  <span className="module-tag" style={{ background: article.status === 'Published' ? '#ecfdf5' : article.status === 'Draft' ? '#f1f5f9' : '#fff7ed', color: article.status === 'Published' ? '#059669' : article.status === 'Draft' ? '#475569' : '#d97706', border: 'none' }}>{article.status}</span>
                 </div>
-                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{article.excerpt.substring(0, 100)}...</p>
+                <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>{article.excerpt.substring(0, 120)}...</p>
+                <div style={{ marginTop: '0.75rem', fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  By {article.author} · {article.date} · {article.readTime} read
+                </div>
               </div>
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <button onClick={() => openEditor(article)} className="nav-item">Edit</button>
-                <button onClick={() => deleteArticle(article.id)} className="nav-item" style={{ color: '#ef4444' }}>Delete</button>
+              <div style={{ display: 'flex', gap: '1rem' }}>
+                <button onClick={() => openEditor(article)} style={{ background: '#f8fafc', border: '1px solid var(--border)', padding: '0.5rem 1rem', borderRadius: '8px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600, color: 'var(--primary)' }}>Edit</button>
+                <button onClick={() => deleteArticle(article.id)} style={{ background: '#fff1f2', border: '1px solid #fecdd3', padding: '0.5rem 1rem', borderRadius: '8px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600, color: '#e11d48' }}>Delete</button>
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <div className="module-card" style={{ maxWidth: '800px', background: '#f8fafc' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            <input 
-              type="text" 
-              placeholder="Article Title" 
-              value={editorContent.title}
-              onChange={e => setEditorContent({...editorContent, title: e.target.value})}
-              style={{ padding: '1rem', border: '1px solid var(--border)', borderRadius: 'var(--radius)', fontSize: '1.25rem', fontWeight: 700, outline: 'none' }}
-            />
-            <textarea 
-              placeholder="Write your content..." 
-              value={editorContent.body}
-              onChange={e => setEditorContent({...editorContent, body: e.target.value})}
-              style={{ padding: '1rem', border: '1px solid var(--border)', borderRadius: 'var(--radius)', minHeight: '300px', fontSize: '1rem', outline: 'none', resize: 'vertical' }}
-            />
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <select 
-                value={editorContent.status}
-                onChange={e => setEditorContent({...editorContent, status: e.target.value as any})}
-                style={{ padding: '0.5rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}
-              >
-                <option value="Draft">Draft</option>
-                <option value="Review">Review</option>
-                <option value="Published">Published</option>
-              </select>
-              <div style={{ display: 'flex', gap: '1rem' }}>
-                <button onClick={() => setView('list')} className="nav-item">Cancel</button>
-                <button onClick={handleSave} className="glass-btn active" style={{ background: 'var(--primary-accent)', color: 'white', border: 'none', padding: '0.6rem 1.5rem', borderRadius: 'var(--radius)', cursor: 'pointer', fontWeight: 600 }}>
-                  Save Changes
+        <div className="module-card" style={{ maxWidth: '900px', margin: '0 auto', background: 'white', padding: '3rem', boxShadow: 'var(--shadow-lg)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+            <div>
+              <label style={{ display: 'block', marginBottom: '0.75rem', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Article Title</label>
+              <input 
+                type="text" 
+                placeholder="Enter a compelling title..." 
+                value={editorContent.title}
+                onChange={e => setEditorContent({...editorContent, title: e.target.value})}
+                style={{ width: '100%', padding: '1rem', border: '1px solid var(--border)', borderRadius: 'var(--radius)', fontSize: '1.5rem', fontWeight: 800, outline: 'none', background: '#fbfbfe', color: 'var(--primary)' }}
+              />
+            </div>
+            <div>
+              <label style={{ display: 'block', marginBottom: '0.75rem', fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Content</label>
+              <textarea 
+                placeholder="Start writing your story..." 
+                value={editorContent.body}
+                onChange={e => setEditorContent({...editorContent, body: e.target.value})}
+                style={{ width: '100%', padding: '1.25rem', border: '1px solid var(--border)', borderRadius: 'var(--radius)', minHeight: '350px', fontSize: '1.05rem', outline: 'none', resize: 'vertical', lineHeight: 1.7, background: '#fbfbfe', color: 'var(--text-main)' }}
+              />
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border)', paddingTop: '2rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)' }}>Status:</label>
+                <select 
+                  value={editorContent.status}
+                  onChange={e => setEditorContent({...editorContent, status: e.target.value as any})}
+                  style={{ padding: '0.6rem 1rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)', background: 'white', fontWeight: 600, fontSize: '0.9rem' }}
+                >
+                  <option value="Draft">Draft Mode</option>
+                  <option value="Review">In Review</option>
+                  <option value="Published">Published</option>
+                </select>
+              </div>
+              <div style={{ display: 'flex', gap: '1.25rem' }}>
+                <button onClick={() => setView('list')} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontWeight: 600, cursor: 'pointer', fontSize: '0.95rem' }}>Discard</button>
+                <button onClick={handleSave} style={{ background: 'var(--primary-gradient)', color: 'white', border: 'none', padding: '0.75rem 2rem', borderRadius: 'var(--radius)', cursor: 'pointer', fontWeight: 700, boxShadow: '0 4px 12px rgba(79, 70, 229, 0.2)' }}>
+                  Save & Publish
                 </button>
               </div>
             </div>
@@ -140,5 +152,6 @@ export function EditorialApp(): React.ReactElement {
         </div>
       )}
     </div>
+
   );
 }
