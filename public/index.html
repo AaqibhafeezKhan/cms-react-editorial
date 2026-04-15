@@ -3,10 +3,114 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CMS React Editorial</title>
+  <meta name="description" content="CMS Ultra Editorial — React-powered content editor for the CMS microfrontend platform">
+  <title>Editorial — CMS Ultra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script type="systemjs-importmap">
+    {
+      "imports": {
+        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.3/lib/system/single-spa.min.js",
+        "react": "https://cdn.jsdelivr.net/npm/react@17.0.1/umd/react.production.min.js",
+        "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@17.0.1/umd/react-dom.production.min.js",
+        "single-spa-react": "https://cdn.jsdelivr.net/npm/single-spa-react@4.2.0/lib/umd/single-spa-react.min.js"
+      }
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.min.js"></script>
+
+  <style>
+    :root {
+      --primary: #6366f1;
+      --secondary: #9333ea;
+      --accent: #22d3ee;
+      --bg-dark: #0f172a;
+      --bg-darker: #020617;
+      --card-bg: rgba(30,41,59,0.7);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --glass: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-darker);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    #app-root { max-width: 960px; margin: 0 auto; }
+
+    .standalone-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(99,102,241,0.15);
+      border: 1px solid rgba(99,102,241,0.4);
+      color: #a5b4fc;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.05em;
+    }
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+    }
+    .glass-btn {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s ease;
+    }
+    .glass-btn.active { background: var(--primary); border-color: var(--primary); }
+    .glass-btn:hover { transform: translateY(-2px); }
+    .vibrant-text {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-in { animation: fadeIn 0.5s ease forwards; }
+  </style>
 </head>
 <body>
-  <div id="root"></div>
-  <script src="/bundle.js"></script>
+  <div id="app-root">
+    <div class="standalone-badge">⚛️ Standalone Preview · React Microfrontend</div>
+    <div id="single-spa-container"></div>
+  </div>
+
+  <script>
+    System.import('./main.js').then(({ bootstrap, mount }) => {
+      const props = {
+        name: 'cms-react-editorial',
+        domElement: document.getElementById('single-spa-container'),
+      };
+      bootstrap(props).then(() => mount(props));
+    }).catch(err => {
+      document.getElementById('single-spa-container').innerHTML =
+        '<div style="color:#f87171;padding:2rem;border:1px solid rgba(248,113,113,0.3);border-radius:1rem;margin-top:1rem"><h3>⚠ Failed to load Editorial MFE</h3><p style="margin-top:0.5rem;font-size:0.875rem;opacity:0.7">' + err.message + '</p></div>';
+    });
+  </script>
 </body>
 </html>
