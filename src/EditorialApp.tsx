@@ -86,14 +86,17 @@ export function EditorialApp(): React.ReactElement {
       </header>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
           .editorial-header { flex-direction: column; align-items: flex-start !important; gap: 1.5rem; }
           .editorial-header h2 { font-size: 1.75rem !important; }
-          .editorial-header p { font-size: 0.95rem !important; }
           .article-card { flex-direction: column; align-items: flex-start !important; gap: 1rem; }
           .article-card > div:last-child { width: 100%; display: flex; gap: 0.5rem; }
           .article-card button { flex: 1; }
-          .editor-container { padding: 1.5rem !important; }
+          .editor-container { padding: 1.5rem !important; max-width: 100% !important; }
+        }
+        @media (max-width: 768px) {
+          .editorial-header h2 { font-size: 1.5rem !important; }
+          .editorial-header p { font-size: 0.9rem !important; }
           .editor-container h1, .editor-container input { font-size: 1.25rem !important; }
         }
       `}} />
